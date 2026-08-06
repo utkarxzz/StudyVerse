@@ -772,10 +772,8 @@ footer{ border-top:1px solid var(--border); padding:50px 24px 30px; margin-top:4
    backend/serverless proxy that holds the key server-side instead —
    see the note at the end of this file.
    ================================================================ */
-const GROQ_API_KEY = "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";
-const MODEL = "llama-3.1-8b-instant"; // current Groq production model — fast + cheap, good fit for short study-pack generations
-const AI_ENABLED = GROQ_API_KEY && GROQ_API_KEY !== "PASTE_API_KEY_HERE";
-
+const BACKEND_URL = "https://studyverse-backend-five.vercel.app/api/chat";
+const AI_ENABLED = true;
 /* ================================================================
    DATA
    ================================================================ */
@@ -879,37 +877,17 @@ function toggleTheme(){
 /* ================================================================
    REUSABLE AI FUNCTION — every AI feature calls this one function
    ================================================================ */
-async function callGroqAI(prompt, systemPrompt){
-  if(!AI_ENABLED){
-    // No live key configured — signal caller to use local demo content.
-    throw new Error("AI_DISABLED");
-  }
-  const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+async function callGroqAI(prompt, systemPrompt) {
+  const res = await fetch(BACKEND_URL, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": "Bearer " + GROQ_API_KEY
-    },
-    body: JSON.stringify({
-      model: MODEL,
-      messages: [
-        { role: "system", content: systemPrompt || "You are ẞîtñøír AI, the study assistant inside StudyVerse. Be clear, structured and student-friendly." },
-        { role: "user", content: prompt }
-      ]
-    })
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ prompt, systemPrompt }),
   });
-  if(!res.ok) throw new Error("AI_REQUEST_FAILED");
+  if (!res.ok) throw new Error("AI_REQUEST_FAILED");
   const data = await res.json();
   const raw = data.choices?.[0]?.message?.content || "";
   return cleanAIHtml(raw);
 }
-
-// Models often wrap their answer in ```html ... ``` even when told not to —
-// strip that fencing so it never shows up as literal text on the page.
-function cleanAIHtml(text){
-  return text.trim().replace(/^```(?:html)?\s*/i, "").replace(/```\s*$/,"").trim();
-}
-
 /* ================================================================
    DEMO / MOCK CONTENT GENERATORS
    (Used whenever AI_ENABLED is false, so the app is fully usable
