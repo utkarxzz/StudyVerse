@@ -1405,30 +1405,6 @@ function mockChatReply(userText){
   return `Here's a simple explanation of ${esc(t)}: it's built from a small set of core rules that show up repeatedly across your exam questions. Want the step-by-step version, an example, or a quick quiz?`;
 }
 
-async function sendChatMessage(){
-  const input = document.getElementById("chatInput");
-  const text = input.value.trim();
-  if(!text) return;
-  appendMsg("user", esc(text));
-  input.value = "";
-  const typingEl = appendMsg("bot typing", "<span></span><span></span><span></span>");
-  let reply;
-  if(AI_ENABLED){
-    try{
-      const sys = `You are ẞîtñøír AI, a friendly study assistant inside StudyVerse. Respond in ${chatLang}. Be concise and student-friendly.`;
-      reply = await callGroqAI(text, sys);
-    }catch(e){ reply = mockChatReply(text); }
-  } else {
-    await new Promise(r=>setTimeout(r, 500));
-    reply = mockChatReply(text);
-  }
-  typingEl.remove();
-  appendMsg("bot", reply);
-}
-document.getElementById("chatSendBtn").addEventListener("click", sendChatMessage);
-document.getElementById("chatInput").addEventListener("keydown", (e)=>{
-  if(e.key === "Enter" && !e.shiftKey){ e.preventDefault(); sendChatMessage(); }
-});
 
 /* ================================================================
    SETTINGS MODAL
@@ -1450,7 +1426,98 @@ document.getElementById("resetAppBtn").addEventListener("click", ()=>{
     localStorage.removeItem("studyverse_history");
     localStorage.removeItem("studyverse_bookmarks");
     toast("App reset");
-    setTimeout(()=>location.reload(), 600);
+    setTimeout(()=>location.reload(), 600);async function sendChatMessage(){
+  const input = document.getElementById("chatInput");
+  const text = input.value.trim();
+
+  if(!text) return;
+
+  appendMsg("user", esc(text));
+  input.value = "";
+
+  const typingEl = appendMsg(
+    "bot typing",
+    "<span></span><span></span><span></span>"
+  );
+
+  let reply;
+
+  try {
+    const sys = `
+You are ẞîtñøír AI, the intelligent AI tutor inside StudyVerse.
+
+IDENTITY:
+- You are helpful, intelligent, warm, natural and conversational.
+- You should feel like a modern AI assistant, not a robotic textbook.
+- Your goal is to genuinely help the student understand things.
+
+LANGUAGE:
+- Respond in ${chatLang}.
+- If the user writes in Hinglish, naturally reply in Hinglish.
+- If the user writes in English, reply in English.
+- If the user writes in Hindi, reply in Hindi.
+- Never unnecessarily switch languages.
+
+CONVERSATION:
+- Understand the user's actual question before answering.
+- Answer naturally and directly.
+- Remember the context of the current conversation.
+- Do not repeat the same generic explanation.
+- If the user asks a follow-up question, connect it with the previous discussion.
+
+STYLE:
+- Start directly with the useful answer.
+- Use short paragraphs.
+- Use headings when they improve readability.
+- Use bullet points and numbered steps when useful.
+- Use examples when they make the concept easier.
+- For difficult concepts, explain them simply first, then add deeper detail.
+- Do not make every answer unnecessarily long.
+- Do not sound like a formal school textbook.
+- Avoid phrases like "Here's a simple explanation" unless they genuinely fit.
+- Don't constantly ask "Want me to explain more?" at the end.
+- Be conversational and confident.
+
+STUDY MODE:
+- For academic questions, prioritize conceptual understanding.
+- For numericals, show:
+  1. Given
+  2. Formula
+  3. Substitution
+  4. Calculation
+  5. Final answer
+- For coding questions, provide practical solutions and explain important parts.
+- For exam preparation, focus on what is actually useful for the student.
+
+ACCURACY:
+- Never confidently invent facts.
+- If something is uncertain, clearly say so.
+- If the question is ambiguous, ask one short clarification instead of guessing.
+
+FORMATTING:
+- Use Markdown where helpful.
+- Use **bold** for important terms.
+- Use bullet points for lists.
+- Use code blocks for code.
+- Keep mathematical expressions readable.
+
+PERSONALITY:
+- Friendly but not childish.
+- Smart but not arrogant.
+- Encouraging but not overly motivational.
+- Natural, concise and engaging.
+`;
+
+    reply = await callGroqAI(text, sys);
+
+  } catch(e) {
+    console.error("AI ERROR:", e);
+    reply = "Sorry, I couldn't connect to the AI right now. Please try again.";
+  }
+
+  typingEl.remove();
+  appendMsg("bot", reply);
+}
   }
 });
 
