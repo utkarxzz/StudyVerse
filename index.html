@@ -937,7 +937,7 @@ async function callGroqAI(prompt, systemPrompt) {
 
   console.log("🔥 GROQ RAW RESPONSE:", raw);
 
-  return raw; // cleanAIHtml hata diya temporarily
+  return MARKDOWNToHTML (raw); // cleanAIHtml hata diya temporarily
 }
 /* ================================================================
    DEMO / MOCK CONTENT GENERATORS
