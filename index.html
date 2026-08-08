@@ -1369,9 +1369,6 @@ function renderQuizResults(){
 /* ================================================================
    AI CHAT
    ================================================================ */
-
-
-/* ================================================================
 let chatLang = "English";
 function openChat(){ document.getElementById("chatPanel").classList.add("open"); }
 document.getElementById("chatFab").addEventListener("click", openChat);
@@ -1432,9 +1429,31 @@ document.getElementById("chatSendBtn").addEventListener("click", sendChatMessage
 document.getElementById("chatInput").addEventListener("keydown", (e)=>{
   if(e.key === "Enter" && !e.shiftKey){ e.preventDefault(); sendChatMessage(); }
 });
-   SETTINGS MODAL
-   ================================================================ */
 
+
+   SETTINGS MODAL
+  /* ================================================================ */
+      
+document.getElementById("settingsBtn").addEventListener("click", ()=>document.getElementById("settingsModal").classList.add("show"));
+document.getElementById("settingsModalClose").addEventListener("click", ()=>document.getElementById("settingsModal").classList.remove("show"));
+document.getElementById("themeToggle").addEventListener("click", toggleTheme);
+document.getElementById("settingsThemeToggle").addEventListener("click", toggleTheme);
+document.querySelectorAll("#settingsModal .chip[data-lang]").forEach(chip => chip.addEventListener("click", ()=>{
+  chatLang = chip.dataset.lang;
+  document.querySelectorAll(".lang-btn").forEach(b=>{ b.classList.toggle("active", b.dataset.lang === chatLang); });
+  toast("Chat language set to " + chatLang);
+}));
+document.getElementById("clearSearchBtn").addEventListener("click", ()=>{ Store.set("studyverse_history", []); renderHistory(); toast("Search history cleared"); });
+document.getElementById("clearBookmarksBtn").addEventListener("click", ()=>{ setBookmarks([]); toast("Bookmarks cleared"); });
+document.getElementById("resetAppBtn").addEventListener("click", ()=>{
+  if(confirm("Reset StudyVerse? This clears your theme, history and bookmarks.")){
+    localStorage.removeItem("studyverse_theme");
+    localStorage.removeItem("studyverse_history");
+    localStorage.removeItem("studyverse_bookmarks");
+    toast("App reset");
+    setTimeout(()=>location.reload(), 600);
+  }
+});
 /* ================================================================
    FOOTER STATIC LINK PLACEHOLDERS
    ================================================================ */
