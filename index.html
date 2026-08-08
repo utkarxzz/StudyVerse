@@ -879,10 +879,16 @@ async function callGroqAI(prompt, systemPrompt) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ prompt, systemPrompt }),
   });
+
   if (!res.ok) throw new Error("AI_REQUEST_FAILED");
+
   const data = await res.json();
+
   const raw = data.choices?.[0]?.message?.content || "";
-  return cleanAIHtml(raw);
+
+  console.log("🔥 GROQ RAW RESPONSE:", raw);
+
+  return raw; // cleanAIHtml hata diya temporarily
 }
 /* ================================================================
    DEMO / MOCK CONTENT GENERATORS
