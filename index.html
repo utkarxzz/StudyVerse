@@ -1430,9 +1430,9 @@ document.getElementById("chatInput").addEventListener("keydown", (e)=>{
   if(e.key === "Enter" && !e.shiftKey){ e.preventDefault(); sendChatMessage(); }
 });
 
-
+/*================================================================
    SETTINGS MODAL
-  /* ================================================================ */
+   ================================================================ */
       
 document.getElementById("settingsBtn").addEventListener("click", ()=>document.getElementById("settingsModal").classList.add("show"));
 document.getElementById("settingsModalClose").addEventListener("click", ()=>document.getElementById("settingsModal").classList.remove("show"));
