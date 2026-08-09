@@ -873,23 +873,21 @@ function toggleTheme(){
 /* ================================================================
    REUSABLE AI FUNCTION — every AI feature calls this one function
    ================================================================ */
+
+let conversationHistory = [];
+
 async function callGroqAI(prompt, systemPrompt) {
   const res = await fetch(BACKEND_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ prompt, systemPrompt }),
   });
-
   if (!res.ok) throw new Error("AI_REQUEST_FAILED");
-
   const data = await res.json();
-
   const raw = data.choices?.[0]?.message?.content || "";
-
-  console.log("🔥 GROQ RAW RESPONSE:", raw);
-
-  return raw; // cleanAIHtml hata diya temporarily
+  return cleanAIHtml(raw);
 }
+   
 /* ================================================================
    DEMO / MOCK CONTENT GENERATORS
    (Used whenever AI_ENABLED is false, so the app is fully usable
