@@ -875,57 +875,15 @@ function toggleTheme(){
    REUSABLE AI FUNCTION — every AI feature calls this one function
    ================================================================ */
 
-   async function callGroqAI(prompt, systemPrompt) {
+   document.getElementById("chatClose").addEventListener("click", () => {
 
-  // Save user's message
-  conversationHistory.push({
-    role: "user",
-    content: prompt
-  });
+  document.getElementById("chatPanel").classList.remove("open");
 
-  try {
+  conversationHistory = [];
 
-    const res = await fetch(BACKEND_URL, {
-      method: "POST",
+  document.getElementById("chatMessages").innerHTML = "";
 
-      headers: {
-        "Content-Type": "application/json"
-      },
-
-      body: JSON.stringify({
-        prompt: prompt,
-        systemPrompt: systemPrompt,
-        messages: conversationHistory
-      })
-    });
-
-    if (!res.ok) {
-      throw new Error("AI_REQUEST_FAILED");
-    }
-
-    const data = await res.json();
-
-    const raw =
-      data.choices?.[0]?.message?.content || "";
-
-    // Save AI response
-    if (raw) {
-      conversationHistory.push({
-        role: "assistant",
-        content: raw
-      });
-    }
-
-    return cleanAIHtml(raw);
-
-  } catch (error) {
-
-    // Remove user message if request failed
-    conversationHistory.pop();
-
-    throw error;
-  }
-}
+});
    
 /* ================================================================
    DEMO / MOCK CONTENT GENERATORS
