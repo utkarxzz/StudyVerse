@@ -1382,27 +1382,17 @@ function renderQuizResults(){
    AI CHAT
    ================================================================ */
 let chatLang = "English";
-let conversationHistory = [];
 
 function openChat(){
   document.getElementById("chatPanel").classList.add("open");
 }
 
 document.getElementById("chatClose").addEventListener("click", () => {
-
-  // Close AI panel
   document.getElementById("chatPanel").classList.remove("open");
-
-  // Clear conversation memory
-  conversationHistory = [];
-
-  // Clear old messages from screen
-  document.getElementById("chatMessages").innerHTML = "";
-
 });
 
 document.querySelectorAll(".lang-btn").forEach(btn => btn.addEventListener("click", ()=>{
-  document.querySelectorAll(".lang-btn").forEach(b => b.classList.remove("active"));
+  document.querySelectorAll(".lang-btn").forEach(b=>b.classList.remove("active"));
   btn.classList.add("active");
   chatLang = btn.dataset.lang;
 }));
