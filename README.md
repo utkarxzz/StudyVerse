@@ -173,29 +173,6 @@ https://study-verse-backend-five.vercel.app/
 
 ---
 
-## 📸 Screenshots
-
-### 🏠 StudyVerse Home
-
-![StudyVerse Home](assets/screenshots/home.png)
-
-
-### 🏠 StudyVerse Subjects
-
-![StudyVerse Home](assets/screenshots/subjects.png)
-
-### 🏠 StudyVerse founder
-
-![StudyVerse Home](assets/screenshots/founder.png)
-
-### 🏠 StudyVerse mission
-
-![StudyVerse Home](assets/screenshots/mission.png)
-
-###  🏠 StudyVerse AI
-
-![StudyVerse Home](assets/screenshots/AI.png)
-
 
 
 ## 🧩 Project Goals
