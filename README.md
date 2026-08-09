@@ -1,87 +1,101 @@
-# 📚 StudyVerse Backend
+# 📚 StudyVerse
 
-### AI-powered backend for a smarter learning experience.
+### Learn smarter. Understand faster. Grow better.
 
-**StudyVerse** is an AI-powered learning platform designed to help students understand concepts, practice their knowledge, and make learning more interactive.
+**StudyVerse** is an AI-powered learning platform built to make studying more interactive, personalized, and accessible.
 
-This repository contains the **StudyVerse backend**, which provides the API layer between the StudyVerse frontend and the AI model.
-
-The frontend is hosted on **GitHub Pages**, while the backend is deployed independently on **Vercel**.
+Instead of using AI only as a question-answering chatbot, StudyVerse aims to create a learning companion that helps students **understand concepts, ask questions, practice, and improve their learning experience.**
 
 ---
 
-## 🚀 What is StudyVerse?
+## 🌟 Why StudyVerse?
 
-Studying can become difficult when students have to switch between multiple resources, search for explanations, and figure out what they should focus on next.
+Learning resources are everywhere—but personalized learning isn't always easy to access.
 
-**StudyVerse brings AI-powered learning assistance into one place.**
+Students often spend time searching for explanations, switching between different resources, and trying to figure out what they should focus on next.
 
-Students can interact with the AI to ask questions, understand difficult concepts, and get personalized learning assistance through a simple and accessible interface.
+**StudyVerse brings AI-powered learning assistance into one simple platform.**
 
-Our goal is to make the journey from:
+Our vision is simple:
 
-**"I don't understand this." → "Now I understand it."**
-
-faster, easier, and more engaging.
+> **AI shouldn't just give students answers. It should help them learn.**
 
 ---
 
-# 🧠 AI Architecture
+# ✨ Features
 
-StudyVerse uses **Groq's API** to communicate with the **Llama 3.1** model.
+### 🤖 AI Study Assistant
 
-Instead of placing the API key directly inside the public frontend, requests are routed through the backend.
+Ask questions and interact with an AI-powered learning assistant whenever you need help understanding a topic.
+
+### 📖 Concept Explanation
+
+Use AI to break down difficult concepts into easier-to-understand explanations.
+
+### 🧠 Interactive Learning
+
+StudyVerse focuses on making learning more interactive instead of simply providing static educational content.
+
+### ⚡ Fast AI Responses
+
+AI requests are processed through the **Groq API** and powered by **Llama 3.1**.
+
+### 🔐 Secure API Architecture
+
+The Groq API key is kept on the backend rather than being exposed in the public frontend.
+
+### 🌐 Separate Frontend & Backend
+
+The frontend and backend are maintained as separate repositories and deployed independently.
+
+---
+
+# 🏗️ Architecture
 
 ```text
-                    ┌──────────────────────┐
-                    │    👨‍🎓 Student       │
-                    └──────────┬───────────┘
-                               │
-                               ▼
-                    ┌──────────────────────┐
-                    │   StudyVerse         │
-                    │     Frontend        │
-                    │    GitHub Pages      │
-                    └──────────┬───────────┘
-                               │
+                         👨‍🎓 Student
+                              │
+                              ▼
+                 ┌────────────────────────┐
+                 │      StudyVerse        │
+                 │       Frontend         │
+                 │     GitHub Pages       │
+                 └────────────┬───────────┘
+                              │
                          HTTPS Request
-                               │
-                               ▼
-                    ┌──────────────────────┐
-                    │  StudyVerse Backend  │
-                    │       Vercel         │
-                    └──────────┬───────────┘
-                               │
+                              │
+                              ▼
+                 ┌────────────────────────┐
+                 │   StudyVerse Backend   │
+                 │        Vercel          │
+                 └────────────┬───────────┘
+                              │
                          Secure API Call
-                               │
-                               ▼
-                    ┌──────────────────────┐
-                    │      Groq API        │
-                    └──────────┬───────────┘
-                               │
-                               ▼
-                    ┌──────────────────────┐
-                    │     Llama 3.1        │
-                    │   AI Model           │
-                    └──────────┬───────────┘
-                               │
+                              │
+                              ▼
+                 ┌────────────────────────┐
+                 │       Groq API         │
+                 └────────────┬───────────┘
+                              │
+                              ▼
+                 ┌────────────────────────┐
+                 │      Llama 3.1         │
+                 │       AI Model         │
+                 └────────────┬───────────┘
+                              │
                          AI Response
-                               │
-                               ▼
-                    ┌──────────────────────┐
-                    │   StudyVerse UI      │
-                    └──────────────────────┘
+                              │
+                              ▼
+                 ┌────────────────────────┐
+                 │     StudyVerse UI      │
+                 └────────────────────────┘
 ```
 
 ---
 
-# 🔐 Secure API Architecture
+# 🔐 Security
 
-A major reason for separating the backend from the frontend is **API key protection**.
-
-The Groq API key is **not placed directly in the public GitHub Pages frontend**.
-
-Instead:
+StudyVerse uses a separate backend to prevent the AI API credential from being exposed directly in the public frontend.
 
 ```text
 Student
@@ -97,177 +111,139 @@ Groq API
 Llama 3.1
 ```
 
-This keeps the API credential on the server side rather than exposing it in client-side JavaScript.
+The backend uses the `GROQ_API_KEY` environment variable, keeping the actual API credential outside the frontend source code.
 
----
-
-# ✨ Features
-
-### 🤖 AI Study Assistant
-
-Students can interact with an AI-powered assistant to ask questions and get help with their studies.
-
-### 📖 Concept Explanation
-
-Difficult topics can be explained through AI-powered responses designed to make learning easier to understand.
-
-### 🧠 Interactive Learning
-
-StudyVerse focuses on making students actively interact with learning content instead of simply consuming information.
-
-### ⚡ Fast AI Responses
-
-Requests are processed through the Groq API and powered by Llama 3.1.
-
-### 🔒 Backend API Protection
-
-The AI API credentials are handled through the backend environment rather than being exposed in the frontend.
-
-### 🌐 Independent Deployment
-
-The frontend and backend are deployed independently, making the system easier to maintain and update.
+**Never commit your real API key to GitHub.**
 
 ---
 
 # 🛠️ Tech Stack
 
-## Frontend
+### Frontend
 
 * HTML
 * CSS
 * JavaScript
 * GitHub Pages
 
-## Backend
+### Backend
 
 * Node.js
 * JavaScript
 * REST API
 * Vercel
 
-## AI
+### AI
 
 * Groq API
 * Llama 3.1
 
-## Development
+### Development & Deployment
 
 * GitHub
+* GitHub Pages
 * Vercel
-* REST APIs
 * Environment Variables
+
+The current backend repository describes itself as a serverless proxy between the GitHub Pages frontend and Groq, with the API key configured through Vercel environment variables.
 
 ---
 
-# 📁 Project Architecture
+# 📂 Project Structure
+
+StudyVerse is organized into two separate repositories:
 
 ```text
 StudyVerse
 │
-├── Frontend
+├── 🎨 Frontend
 │   └── GitHub Pages
 │
-│       ↓ HTTPS API Request
-│
-└── Backend
-    ├── API Routes
+└── ⚙️ Backend
+    ├── API
     ├── Environment Variables
-    └── Vercel Deployment
-            │
-            ↓
-        Groq API
-            │
-            ↓
-        Llama 3.1
+    └── Vercel
+          │
+          ▼
+       Groq API
+          │
+          ▼
+       Llama 3.1
 ```
-
-The frontend and backend are maintained as separate repositories.
-
----
-
-# ⚙️ Environment Variables
-
-The backend requires the Groq API key to communicate with the AI model.
-
-Example:
-
-```env
-GROQ_API_KEY=your_api_key_here
-```
-
-The actual API key should **never be committed to GitHub**.
-
-For production deployment, the key should be configured through Vercel's environment variables.
 
 ---
 
 # 🚀 Deployment
 
-StudyVerse follows a simple deployment architecture:
+### Frontend
 
-```text
-Developer
-    ↓
-GitHub
-    ↓
-Frontend → GitHub Pages
-    │
-    └──── API Request ────→ Backend → Vercel
-                                  │
-                                  ↓
-                              Groq API
-                                  │
-                                  ↓
-                              Llama 3.1
-```
-
-The backend can be updated independently without modifying the frontend hosting environment.
-
----
-
-# 🌐 Project
-
-### StudyVerse Frontend
-
-https://utkarxzz.github.io/StudyVerse/
+The StudyVerse frontend is hosted through GitHub Pages.
 
 ### Backend
 
-The StudyVerse backend is deployed separately through Vercel.
+The backend is deployed independently through Vercel and acts as the API layer between the frontend and Groq.
+
+The backend repository also includes the `/api/chat` endpoint architecture used for AI requests.
+
+---
+
+# 🔗 Project Links
+
+### 🌐 Live StudyVerse
+
+https://utkarxzz.github.io/StudyVerse/
+
+### 💻 Frontend Repository
+
+https://github.com/utkarxzz/StudyVerse
+
+### ⚙️ Backend Repository
+
+https://github.com/utkarxzz/StudyVerse-Backend
+
+### 🚀 Backend Deployment
+
+https://study-verse-backend-five.vercel.app/
 
 ---
 
 # 🎯 Our Vision
 
-StudyVerse is built around a simple idea:
+We believe technology should make learning **more personal, not more complicated.**
 
-> **AI shouldn't just give students answers. It should help them learn.**
+StudyVerse is built around a simple learning cycle:
 
-We want to make learning more accessible, interactive, and personalized by bringing AI-powered assistance into a dedicated educational environment.
+```text
+Understand
+    ↓
+Practice
+    ↓
+Identify Weaknesses
+    ↓
+Improve
+    ↓
+Learn Better
+```
 
-Our long-term vision is to help students move through the complete learning cycle:
-
-**Understand → Practice → Identify Weaknesses → Improve → Learn Better**
+Our goal is to explore how generative AI can become more than an answer generator—and instead become a meaningful part of a student's learning journey.
 
 ---
 
-# 💡 Why StudyVerse?
+# 💡 The Idea
 
-Traditional digital learning often gives students content.
+Traditional digital learning gives students content.
 
 AI can give students answers.
 
-**StudyVerse aims to connect the two.**
+**StudyVerse connects the two.**
 
-Instead of treating AI as just a chatbot, StudyVerse uses it as a learning companion that can help students understand concepts and interact with their studies in a more meaningful way.
+It provides students with an interactive AI-powered environment where they can ask, understand, explore, and learn.
+
+> **StudyVerse — Where learning meets AI.**
 
 ---
 
 # 👨‍💻 Built With
-
-**StudyVerse** was created as an AI-powered educational project focused on exploring how generative AI can improve the student learning experience.
-
-### Core Technologies
 
 **Groq + Llama 3.1 + JavaScript + Node.js + Vercel + GitHub Pages**
 
@@ -275,6 +251,6 @@ Instead of treating AI as just a chatbot, StudyVerse uses it as a learning compa
 
 # 📜 License
 
-This project is created for educational and hackathon purposes.
+This project was created for educational and hackathon purposes.
 
 © 2026 StudyVerse
