@@ -175,39 +175,28 @@ https://study-verse-backend-five.vercel.app/
 
 ## 📸 Screenshots
 
-Add screenshots of the main StudyVerse interface here.
+### 🏠 StudyVerse Home
 
-Recommended:
-
-- Home / landing page
-- AI learning interface
-- Main learning workflow
-- Any quiz, progress, or other major feature
-
-Example:
-
-```md
 ![StudyVerse Home](assets/screenshots/home.png)
-![StudyVerse AI](assets/screenshots/ai.png)
-```
 
----
 
-## 🎥 Demo
+### 🏠 StudyVerse Subjects
 
-Add the public demo video link here.
+![StudyVerse Home](assets/screenshots/subjects.png)
 
-The demo should show:
+### 🏠 StudyVerse founder
 
-1. The problem StudyVerse solves.
-2. The main user workflow.
-3. A live interaction with the AI.
-4. The working application.
-5. The backend/AI architecture or deployment where relevant.
+![StudyVerse Home](assets/screenshots/founder.png)
 
-**Demo:** `ADD_YOUR_VIDEO_LINK_HERE`
+### 🏠 StudyVerse mission
 
----
+![StudyVerse Home](assets/screenshots/mission.png)
+
+###  🏠 StudyVerse AI
+
+![StudyVerse Home](assets/screenshots/AI.png)
+
+
 
 ## 🧩 Project Goals
 
