@@ -13,8 +13,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="StudyVerse">
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>   
+<meta name="apple-mobile-web-app-title" content="StudyVerse">  
 
 <style>
 /* ================================================================
@@ -874,12 +873,8 @@ function toggleTheme(){
 /* ================================================================
    REUSABLE AI FUNCTION — every AI feature calls this one function
    ================================================================ */
+async function callGroqAI(prompt, systemPrompt = "") {
 
-  /* ================================================================
-   REUSABLE AI FUNCTION — every AI feature calls this one function
-   ================================================================ */
-
-async function callGroqAI(prompt, systemPrompt) {
   const res = await fetch(BACKEND_URL, {
     method: "POST",
     headers: {
@@ -897,11 +892,11 @@ async function callGroqAI(prompt, systemPrompt) {
 
   const data = await res.json();
 
-  const raw = data.choices?.[0]?.message?.content || "";
+  const raw = data?.choices?.[0]?.message?.content || "";
 
   return cleanAIHtml(raw);
 }
-   
+ 
 /* ================================================================
    DEMO / MOCK CONTENT GENERATORS
    (Used whenever AI_ENABLED is false, so the app is fully usable
