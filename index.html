@@ -875,15 +875,32 @@ function toggleTheme(){
    REUSABLE AI FUNCTION — every AI feature calls this one function
    ================================================================ */
 
-   document.getElementById("chatClose").addEventListener("click", () => {
+  /* ================================================================
+   REUSABLE AI FUNCTION — every AI feature calls this one function
+   ================================================================ */
 
-  document.getElementById("chatPanel").classList.remove("open");
+async function callGroqAI(prompt, systemPrompt) {
+  const res = await fetch(BACKEND_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      prompt: prompt,
+      systemPrompt: systemPrompt
+    })
+  });
 
-  conversationHistory = [];
+  if (!res.ok) {
+    throw new Error("AI_REQUEST_FAILED");
+  }
 
-  document.getElementById("chatMessages").innerHTML = "";
+  const data = await res.json();
 
-});
+  const raw = data.choices?.[0]?.message?.content || "";
+
+  return cleanAIHtml(raw);
+}
    
 /* ================================================================
    DEMO / MOCK CONTENT GENERATORS
@@ -1365,9 +1382,11 @@ function renderQuizResults(){
    AI CHAT
    ================================================================ */
 let chatLang = "English";
-function openChat(){ document.getElementById("chatPanel").classList.add("open"); }
-document.getElementById("chatFab").addEventListener("click", openChat);
-document.getElementById("chatClose").addEventListener("click", () => {
+
+let conversationHistory = [];
+
+function openChat(){
+  document.getElementById("chatPanel").classList.add("open");
 
   // Close AI panel
   document.getElementById("chatPanel").classList.remove("open");
