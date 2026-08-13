@@ -1520,8 +1520,7 @@ async function sendChatMessage(){
   let reply;
   if(AI_ENABLED){
     try{
-       const sys = `
-   const sys = `
+     const sys = `
 You are BitNoir AI, an intelligent and friendly study assistant.
 
 IMPORTANT RESPONSE FORMAT:
@@ -1537,7 +1536,6 @@ IMPORTANT RESPONSE FORMAT:
 - Never return one giant plain-text paragraph.
 - Break long answers into clear sections.
 - Keep responses conversational, helpful, and engaging.
-`;
 `;
        
       reply = await callGroqAI(text, sys);
