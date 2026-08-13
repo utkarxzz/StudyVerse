@@ -376,6 +376,96 @@ h1,h2,h3,h4,.font-display{ font-family:'Space Grotesk',system-ui,sans-serif; let
 .msg.bot{ background:var(--surface); align-self:flex-start; border-bottom-left-radius:5px; }
 .msg.user{ background:var(--accent-grad); color:#fff; align-self:flex-end; border-bottom-right-radius:5px; }
 .msg.typing{ display:flex; gap:4px; align-items:center; }
+ /* BitNoir AI Markdown Styling */
+.msg.bot h1,
+.msg.bot h2,
+.msg.bot h3,
+.msg.bot h4 {
+  color: var(--text);
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.msg.bot h1 {
+  font-size: 20px;
+  margin: 4px 0 12px;
+}
+
+.msg.bot h2 {
+  font-size: 18px;
+  margin: 4px 0 10px;
+}
+
+.msg.bot h3 {
+  font-size: 15px;
+  margin: 14px 0 7px;
+}
+
+.msg.bot p {
+  margin: 7px 0;
+}
+
+.msg.bot p:first-child {
+  margin-top: 0;
+}
+
+.msg.bot p:last-child {
+  margin-bottom: 0;
+}
+
+.msg.bot strong {
+  font-weight: 700;
+  color: var(--text);
+}
+
+.msg.bot em {
+  font-style: italic;
+}
+
+.msg.bot ul,
+.msg.bot ol {
+  margin: 8px 0;
+  padding-left: 20px;
+}
+
+.msg.bot li {
+  margin: 4px 0;
+}
+
+.msg.bot blockquote {
+  margin: 10px 0;
+  padding: 8px 12px;
+  border-left: 3px solid var(--accent);
+  background: var(--surface-2);
+  border-radius: 7px;
+}
+
+.msg.bot code {
+  padding: 2px 5px;
+  border-radius: 5px;
+  background: rgba(124, 92, 255, 0.15);
+  font-family: monospace;
+}
+
+.msg.bot pre {
+  margin: 10px 0;
+  padding: 12px;
+  overflow-x: auto;
+  border-radius: 9px;
+  background: #080a12;
+  border: 1px solid var(--border);
+}
+
+.msg.bot pre code {
+  padding: 0;
+  background: transparent;
+}
+
+.msg.bot hr {
+  margin: 12px 0;
+  border: 0;
+  border-top: 1px solid var(--border);
+}  
 .msg.typing span{ width:6px; height:6px; border-radius:50%; background:var(--text-faint); animation:loadDot 1s infinite; }
 .msg.typing span:nth-child(2){ animation-delay:.15s;} .msg.typing span:nth-child(3){ animation-delay:.3s;}
 .chat-input-row{ padding:14px 16px; border-top:1px solid var(--border); display:flex; gap:8px; }
@@ -450,6 +540,9 @@ footer{ border-top:1px solid var(--border); padding:50px 24px 30px; margin-top:4
   .results-header{ padding:20px; }
 }
 </style>
+   
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+   
 </head>
 <body>
 
@@ -1384,13 +1477,25 @@ document.querySelectorAll(".chat-quick").forEach(chip => chip.addEventListener("
   sendChatMessage();
 }));
 
-function appendMsg(role, html){
+function appendMsg(role, content){
   const wrap = document.getElementById("chatMessages");
   const el = document.createElement("div");
+
   el.className = "msg " + role;
-  el.innerHTML = html;
+
+  // Render Markdown only for actual AI messages
+  if(role === "bot"){
+    el.innerHTML = marked.parse(content, {
+      gfm: true,
+      breaks: true
+    });
+  } else {
+    el.innerHTML = content;
+  }
+
   wrap.appendChild(el);
   wrap.scrollTop = wrap.scrollHeight;
+
   return el;
 }
 appendMsg("bot", `Hi, I'm ẞîtñøír AI 👋 Ask me to explain a topic, quiz you, or help you revise — in English, Hindi or Hinglish.`);
@@ -1416,7 +1521,8 @@ async function sendChatMessage(){
   if(AI_ENABLED){
     try{
        const sys = `
-   You are BitNoir AI, an intelligent and friendly study assistant.
+   const sys = `
+You are BitNoir AI, an intelligent and friendly study assistant.
 
 IMPORTANT RESPONSE FORMAT:
 - Always use Markdown formatting.
@@ -1425,12 +1531,13 @@ IMPORTANT RESPONSE FORMAT:
 - Use bullet points for lists.
 - Use numbered lists for steps.
 - Use **bold** for important terms.
-- Use `code` for code snippets or technical terms when appropriate.
+- Use \`code\` for code snippets or technical terms when appropriate.
 - Use > for important notes.
 - Add emojis naturally when useful.
 - Never return one giant plain-text paragraph.
 - Break long answers into clear sections.
 - Keep responses conversational, helpful, and engaging.
+`;
 `;
        
       reply = await callGroqAI(text, sys);
